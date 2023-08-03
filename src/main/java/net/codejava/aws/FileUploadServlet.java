@@ -22,7 +22,16 @@ public class FileUploadServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String description = "";
 		description = request.getParameter("description");
+		String[] email1 = new String[5];
+		email1[0] = request.getParameter("email1");
+		email1[1] = request.getParameter("email2");
+		email1[2] = request.getParameter("email3");
+		email1[3] = request.getParameter("email4");
+		email1[4] = request.getParameter("email5");
+		
 		System.out.println("Description: "  + description);
+		System.out.println("Email1: "  + email1);
+
 		Part filePart = request.getPart("file");
         
         String fileName = getFileName(filePart);
@@ -31,7 +40,7 @@ public class FileUploadServlet extends HttpServlet {
  
         String message = "";
         try {
-            S3Util.uploadFile(fileName, filePart.getInputStream());
+            S3Util.uploadFile(fileName, filePart.getInputStream(),email1,description);
             message = "The file has been uploaded successfully";
         } catch (Exception ex) {
             message = "Error uploading file: " + ex.getMessage();
